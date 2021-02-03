@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<HTML>
+
+  {% extends 'layout.html' %}
+  {% block body %}
+
+    <head>
+        <title>Coria Salon App</title>
+    </head>
+
+    <header id="logo"></header>
+
+
+    <div class="card card-body">
+    <form action="/update/{{trabajo_sel.0}}" method="POST">
+      <div class="form-group">
+        <select class="form-control" name="artista">
+            <option selected value="{{ trabajo_sel.1 }}"> {{ trabajo_sel.1 }} </option>
+            <option value="Martin">Martin</option> 
+            <option value="Sergio">Sergio</option>
+            <option value="Luciana">Luciana</option>  
+          </select>
+      </div>
+      <div class="form-group">
+        <select class="form-control" name="trabajo_realizado">
+            <option selected value="{{ trabajo_sel.2 }}"> {{ trabajo_sel.2 }} </option>
+            <option value="Baraba">Barba</option> 
+            <option value="Color">Color</option> 
+            <option value="Corte">Corte</option>
+            <option value="Corte+Color">Corte + Color</option> 
+            <option value="Corte+Barba">Corte + Barba </option> 
+            <option value="Uñas">Uñas</option> 
+          </select>
+      </div>
+      <div class="form-group">
+        <input type="int" class="form-control" name="precio" placeholder="Precio" value="{{ trabajo_sel.3 }}">
+      </div>
+      <div class="form-group">
+        <button type='submit' class="btn btn-primary btn-block">
+          Cargar 
+        </button>
+      </div>
+    </form>
+    </div>
+
+
+    <nav class="nav pt-5">
+      <ul>
+        <a href="/index">Volver</a>
+      </ul>
+    </nav>
+
+  {% endblock %}

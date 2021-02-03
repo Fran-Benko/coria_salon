@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<HTML>
+
+  {% extends 'layout.html' %}
+  {% block body %}
+
+    <head>
+        <title>Coria Salon App</title>
+    </head>
+
+    <header id="logo"></header>
+
+    {% with mensajes = get_flashed_messages() %}
+        {% if mensajes %}
+        {% for mensaje in mensajes %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ mensaje }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="card card-body">
+    <form action="/nuevo_reporte" method="POST">
+      <div class="form-group">
+          <a>Variable para el Eje Horizontal</a>
+            <select class="form-control" name="variable_x">
+                <option selected value="0"> Elige una variable </option>
+                <option value="artista">Artista</option> 
+                <option value="trabajo_realizado">Trabajo Realizado</option> 
+                <option value="fecha">Fecha</option>  
+            </select>
+      </div>
+
+      <div class="form-group">
+        <a>Variable para el Eje Vertical</a>
+            <select class="form-control" name="variable_y">
+                <option selected value="precio"> Precio </option>
+                <option value="precio">Precio</option>  
+
+            </select>
+      </div>
+
+      <div class="form-group">
+        <a>Metodo para Eje Vertical:</a>
+            <select class="form-control" name="mode">
+                <option selected value="0"> Elige un metodo </option>
+                <option value="sum">Sumatoria</option> 
+                <option value="count">Cantidad</option>
+            </select>
+      </div>
+
+      <div class="form-group">
+        <a>Fecha Desde:</a>
+        <input type="date" class="form-control" name="fecha_in">
+      </div>
+
+      <div class="form-group">
+        <a>Fecha Hasta:</a>
+        <input type="date" class="form-control" name="fecha_fi">
+      </div>
+
+      <div class="form-group">
+        <button type='submit' class="btn btn-primary btn-block">
+          Graficar 
+        </button>
+      </div>
+    </form>
+    </div>
+
+
+    <nav class="nav pt-5">
+      <ul>
+        <a href="/index">Volver</a>
+      </ul>
+    </nav>
+
+  {% endblock %}

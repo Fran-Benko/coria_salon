@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<HTML>
+
+  {% extends 'layout.html' %}
+  {% block body %}
+
+    <head>
+        <title>Coria Salon App</title>
+
+        <!--Importing Chart-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js"></script>
+    </head>
+
+
+    <canvas id="myChart" width="1000" height="300"></canvas>
+    <script>
+    Chart.defaults.global.responsive = false;
+    
+    var data = {
+        labels: [{% for item in etiquetas %}
+             "{{item}}",
+            {% endfor %}],
+        datasets:[{
+            label:'Reporte Coria Salon App',
+            data: [{% for item in datos %}
+                {{item}},
+              {% endfor %}]
+        }]
+    }
+
+    var ctx = document.getElementById('myChart').getContext("2d");
+    
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+                }
+            }]
+        }
+    }
+    });
+    </script>
+
+    <nav class="nav pt-5">
+    <ul>
+        <a href="/index">Volver</a>
+    </ul>
+    </nav>
+
+  {% endblock %}
