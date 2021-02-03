@@ -138,5 +138,9 @@ def nuevo_report():
             flash('Te olvidaste de seleccionar algun campo')
             cursor.close()
             return redirect(url_for('reportes'))
+
+
+if __name__ == '__main__':
+    app.run()
         
 
