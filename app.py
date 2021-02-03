@@ -14,11 +14,11 @@ config = {
   'password': 'bae95327',
   'host': 'us-cdbr-east-03.cleardb.com',
   'database': 'heroku_25e4199725f9d55',
-  'port': '3306', 
+  'port': '3306',
+  'client_flags': [ClientFlag.SSL], 
   'ssl_ca': 'ssl/cleardb-ca.pem', 
   'ssl_cert': 'ssl/bfbaad988df285-cert.pem', 
   'ssl_key': 'ssl/bfbaad988df285-key.pem'
-  #'client_flags': [ClientFlag.SSL],
 }
 
 
@@ -140,7 +140,4 @@ def nuevo_report():
             return redirect(url_for('reportes'))
 
 
-if __name__ == '__main__':
-    app.run()
-        
 
