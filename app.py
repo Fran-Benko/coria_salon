@@ -14,12 +14,8 @@ config = {
   'password': 'bae95327',
   'host': 'us-cdbr-east-03.cleardb.com',
   'database': 'heroku_25e4199725f9d55', 
-  'use_pure': True,
-  'ssl_ca': 'ssl/cleardb-ca.pem', 
-  'ssl_cert': 'ssl/bfbaad988df285-cert.pem', 
-  'ssl_key': 'ssl/bfbaad988df285-key.pem',
-  'ssl_verify_cert' : True,
-  'ssl_verify_identity' : True
+  'use_pure': 'False',
+  'ssl_ca': 'ssl/cleardb-ca.pem'
 }
 
 
