@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect, flash
 import mysql.connector
-from datetime import date
+from datetime import datetime
 import os
 
 
@@ -13,16 +13,14 @@ config = {
   'user': 'bfbaad988df285',
   'password': 'bae95327',
   'host': 'us-cdbr-east-03.cleardb.com',
-  'database': 'heroku_25e4199725f9d55',
-  'port': '3306', 
-  'use_pure': True
+  'database': 'heroku_25e4199725f9d55', 
+  'use_pure': True,
+  'ssl_ca': 'ssl/cleardb-ca.pem', 
+  'ssl_cert': 'ssl/bfbaad988df285-cert.pem', 
+  'ssl_key': 'ssl/bfbaad988df285-key.pem'
 }
 
-'''
-'ssl_ca': 'ssl/cleardb-ca.pem', 
-'ssl_cert': 'ssl/bfbaad988df285-cert.pem', 
-'ssl_key': 'ssl/bfbaad988df285-key.pem'
-'''
+
 
 @app.route('/')
 def inicio():
@@ -56,7 +54,7 @@ def nuevo_trabajo():
         artista = request.form['artista']
         trabajo_real = request.form['trabajo_realizado']
         precio = request.form['precio']
-        fecha = date.today() # Cambiar a formato
+        fecha = datetime.now()
         cnx = mysql.connector.connect(**config)
         cursor = cnx.cursor()
         cursor.execute('INSERT INTO trabajo (artista, trabajo_realizado, precio, fecha) VALUES (%s, %s, %s,%s)',
