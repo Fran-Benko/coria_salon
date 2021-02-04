@@ -15,11 +15,14 @@ config = {
   'host': 'us-cdbr-east-03.cleardb.com',
   'database': 'heroku_25e4199725f9d55',
   'port': '3306', 
-  'ssl_ca': 'ssl/cleardb-ca.pem', 
-  'ssl_cert': 'ssl/bfbaad988df285-cert.pem', 
-  'ssl_key': 'ssl/bfbaad988df285-key.pem'
+  'use_pure': True
 }
 
+'''
+'ssl_ca': 'ssl/cleardb-ca.pem', 
+'ssl_cert': 'ssl/bfbaad988df285-cert.pem', 
+'ssl_key': 'ssl/bfbaad988df285-key.pem'
+'''
 
 @app.route('/')
 def inicio():
