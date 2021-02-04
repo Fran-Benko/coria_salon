@@ -14,21 +14,16 @@ config = {
   'password': 'bae95327',
   'host': 'us-cdbr-east-03.cleardb.com',
   'database': 'heroku_25e4199725f9d55',
-  'port': '3306',
-  'client_flags': [ClientFlag.SSL], 
+  'port': '3306', 
   'ssl_ca': 'ssl/cleardb-ca.pem', 
   'ssl_cert': 'ssl/bfbaad988df285-cert.pem', 
   'ssl_key': 'ssl/bfbaad988df285-key.pem'
 }
 
 
-
-
-#init MySQL
-cnx = mysql.connector.connect(**config)
-
 @app.route('/')
 def inicio():
+    cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
     cursor.execute('select * from trabajo')
     data = cursor.fetchall()
@@ -37,6 +32,7 @@ def inicio():
 
 @app.route('/index')
 def index():
+    cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
     cursor.execute('select * from trabajo')
     data = cursor.fetchall()
@@ -58,6 +54,7 @@ def nuevo_trabajo():
         trabajo_real = request.form['trabajo_realizado']
         precio = request.form['precio']
         fecha = date.today() # Cambiar a formato
+        cnx = mysql.connector.connect(**config)
         cursor = cnx.cursor()
         cursor.execute('INSERT INTO trabajo (artista, trabajo_realizado, precio, fecha) VALUES (%s, %s, %s,%s)',
         (artista, trabajo_real, precio, fecha))
@@ -68,6 +65,7 @@ def nuevo_trabajo():
 
 @app.route('/borrar/<string:id>')
 def borrar_trabajo(id):
+    cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor() 
     cursor.execute('delete from trabajo where idtrabajo = {0}'.format(id))
     cursor.close()
@@ -76,6 +74,7 @@ def borrar_trabajo(id):
 
 @app.route('/editar/<id>')
 def pedir_trabajo(id):
+    cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor()
     cursor.execute('select * from trabajo where idtrabajo = {0}'.format(id))
     data = cursor.fetchall()
@@ -88,6 +87,7 @@ def actualizar_trabajo(id):
         artista = request.form['artista']
         trabajo_real = request.form['trabajo_realizado']
         precio = request.form['precio']
+        cnx = mysql.connector.connect(**config)
         cursor = cnx.cursor()
         cursor.execute("""
         update trabajo 
@@ -108,6 +108,7 @@ def nuevo_report():
         variable_y = request.form['variable_y']
         fecha_in = request.form['fecha_in']
         fecha_fi = request.form['fecha_fi']
+        cnx = mysql.connector.connect(**config)
         cursor = cnx.cursor()
         if (mode!='0') & (variable_x!='0') & (variable_y!='0') & (fecha_in != '') & (fecha_fi != ''):
             if mode == 'sum':
