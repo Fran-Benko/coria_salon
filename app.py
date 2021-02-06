@@ -14,6 +14,7 @@ config = {
   'user': 'bfbaad988df285',
   'password': 'bae95327',
   'host': 'us-cdbr-east-03.cleardb.com',
+  'database': 'heroku_25e4199725f9d55'
   'ssl_disabled': 'True'
 }
 
