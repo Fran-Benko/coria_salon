@@ -13,9 +13,12 @@ config = {
   'user': 'bfbaad988df285',
   'password': 'bae95327',
   'host': 'us-cdbr-east-03.cleardb.com',
-  'database': 'heroku_25e4199725f9d55', 
-  'use_pure': 'True',
-  'ssl_cipher': 'ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DH-DSS-AES256-GCM-SHA384:DHE-DSS-AES256-GCM-SHA384:DH-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA256:DH-RSA-AES256-SHA256:DH-DSS-AES256-SHA256:DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:DH-RSA-AES256-SHA:DH-DSS-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:DHE-DSS-CAMELLIA256-SHA:DH-RSA-CAMELLIA256-SHA:DH-DSS-CAMELLIA256-SHA:ECDH-RSA-AES256-GCM-SHA384:ECDH-ECDSA-AES256-GCM-SHA384:ECDH-RSA-AES256-SHA384:ECDH-ECDSA-AES256-SHA384:ECDH-RSA-AES256-SHA:ECDH-ECDSA-AES256-SHA:AES256-GCM-SHA384:AES256-SHA256:AES256-SHA:CAMELLIA256-SHA:PSK-AES256-CBC-SHA:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:DH-DSS-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:DH-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-DSS-AES128-'
+  'database': 'heroku_25e4199725f9d55',
+  'port': '3306',
+  'ssl_ca': '/ssl/cleardb-ca.pem', 
+  'ssl_cert': '/ssl/bfbaad988df285-cert.pem', 
+  'ssl_key': '/ssl/bfbaad988df285-key.pem',
+  'ssl_cipher': 'DHE-RSA-AES128-SHA'
 }
 
 
@@ -27,6 +30,7 @@ def inicio():
     cursor.execute('select * from trabajo')
     data = cursor.fetchall()
     cursor.close()
+    cnx.close()
     return render_template('index.html', trabajos = data)
 
 @app.route('/index')
@@ -36,6 +40,7 @@ def index():
     cursor.execute('select * from trabajo')
     data = cursor.fetchall()
     cursor.close()
+    cnx.close()
     return render_template('index.html', trabajos = data)
 
 @app.route('/nuevo')
@@ -57,7 +62,9 @@ def nuevo_trabajo():
         cursor = cnx.cursor()
         cursor.execute('INSERT INTO trabajo (artista, trabajo_realizado, precio, fecha) VALUES (%s, %s, %s,%s)',
         (artista, trabajo_real, precio, fecha))
+        cnx.commit()
         cursor.close()
+        cnx.close()
         flash('Trabajo Cargado Correctamente')
         return redirect(url_for('index'))
 
@@ -67,7 +74,9 @@ def borrar_trabajo(id):
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor() 
     cursor.execute('delete from trabajo where idtrabajo = {0}'.format(id))
+    cnx.commit()
     cursor.close()
+    cnx.close()
     flash('Se borro el trabajo correctamente')
     return redirect(url_for('index'))
 
@@ -78,6 +87,7 @@ def pedir_trabajo(id):
     cursor.execute('select * from trabajo where idtrabajo = {0}'.format(id))
     data = cursor.fetchall()
     cursor.close()
+    cnx.close()
     return render_template('edit-trabajo.html', trabajo_sel = data[0])
 
 @app.route('/update/<string:id>', methods=['POST'])
@@ -94,7 +104,9 @@ def actualizar_trabajo(id):
             trabajo_realizado = %s,
             precio = %s
         where idtrabajo = %s""", (artista, trabajo_real, precio, id))
+        cnx.commit()
         cursor.close()
+        cnx.close()
         flash('Se actualizo el trabajo correctamente')
         return redirect(url_for('index'))
 
@@ -120,6 +132,7 @@ def nuevo_report():
                     etiquetas.append(dato[0])
                     datos.append(int(dato[1]))
                 cursor.close()
+                cnx.close()
                 return render_template('grafico.html', etiquetas = etiquetas, datos = datos)
                 
             else:
@@ -132,11 +145,13 @@ def nuevo_report():
                     etiquetas.append(dato[0])
                     datos.append(int(dato[1]))
                 cursor.close()
+                cnx.close()
                 return render_template('grafico.html', etiquetas = etiquetas, datos = datos)
                 
         else:
             flash('Te olvidaste de seleccionar algun campo')
             cursor.close()
+            cnx.close()
             return redirect(url_for('reportes'))
 
 
