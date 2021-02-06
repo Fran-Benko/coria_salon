@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect, flash
 import mysql.connector
+from mysql.connector.constants import ClientFlag
 from datetime import datetime
 import os
 
@@ -15,6 +16,7 @@ config = {
   'host': 'us-cdbr-east-03.cleardb.com',
   'database': 'heroku_25e4199725f9d55',
   'port': '3306',
+  'client_flags': [ClientFlag.SSL],
   'ssl_ca': '/ssl/cleardb-ca.pem', 
   'ssl_cert': '/ssl/bfbaad988df285-cert.pem', 
   'ssl_key': '/ssl/bfbaad988df285-key.pem',
