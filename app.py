@@ -11,19 +11,13 @@ app.secret_key= 'secret'
 #Definimos las Config 
 
 config = {
-  'user': 'bfbaad988df285',
-  'password': 'bae95327',
-  'host': 'us-cdbr-east-03.cleardb.com',
-  'database': 'heroku_25e4199725f9d55',
+  'user': '#######',
+  'password': '#######',
+  'host': '#######',
+  'database': '########',
   'ssl_disabled': 'True'
 }
 
-
-#'client_flags': [ClientFlag.SSL],
-#'ssl_ca': '/opt/mysql/ssl/cleardb-ca.pem', 
-#'ssl_cert': '/opt/mysql/ssl/bfbaad988df285-cert.pem', 
-#'ssl_key': '/opt/mysql/ssl/bfbaad988df285-key.pem',
-#'ssl_cipher': 'DHE-RSA-AES128-SHA'
 
 @app.route('/')
 def inicio():
